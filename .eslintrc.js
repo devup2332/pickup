@@ -26,7 +26,7 @@ module.exports = {
 	plugins: ['react', '@typescript-eslint'],
 	rules: {
 		'quotes': ['error', 'single'],
-		'no-unused-vars': 'error',
+		'no-unused-vars': 'warn',
 		'semi': ['error', 'always'],
 		'indent': ['error', 'tab'],
 		'quote-props': ['error', 'consistent'],

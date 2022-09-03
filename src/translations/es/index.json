@@ -1,0 +1,15 @@
+{
+	"signIn": {
+		"signInTitle": "Ingresar",
+		"signInButton": "Ingresar",
+		"signInWithGoogle": "Ingresar con Google",
+		"signInEmailFieldLabel": "Correo",
+		"signInPasswordFieldLabel": "Contrasena",
+		"signInPasswordFieldError": "La contrasena es requerida",
+		"signInEmailFieldError": {
+			"required": "El correo es requirido",
+			"invalid": "El correo es invalido"
+		},
+		"signInForgotPasswordLinkText": "Olvido su contrasena ?"
+	}
+}

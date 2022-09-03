@@ -1,0 +1,15 @@
+{
+	"signIn": {
+		"signInTitle": "Sign In",
+		"signInButton": "Sign in",
+		"signInWithGoogle": "Sign in with Google",
+		"signInEmailFieldLabel": "Email",
+		"signInPasswordFieldLabel": "Password",
+		"signInPasswordFieldError": "Password is required",
+		"signInEmailFieldError": {
+			"required": "Email is required",
+			"invalid": "Email is invalid"
+		},
+		"signInForgotPasswordLinkText": "Forgot your password ?"
+	}
+}

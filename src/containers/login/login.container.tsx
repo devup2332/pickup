@@ -1,6 +1,7 @@
 import OutlinedInput from '@mui/material/OutlinedInput';
 import Head from 'next/head';
 import Button from '@mui/material/Button';
+import patterns from '../../utils/patterns/index';
 import {
 	FormControl,
 	FormHelperText,
@@ -9,13 +10,15 @@ import {
 	InputLabel,
 	useTheme,
 } from '@mui/material';
-import { Google, Visibility, VisibilityOff } from '@mui/icons-material';
+import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { IconGoogleColor } from '../../components/atoms/icons';
+import { useTranslation } from 'react-i18next';
 
 const LoginContainer = () => {
 	const [showPass, setShowPass] = useState(false);
+	const { t } = useTranslation('global');
 	const theme = useTheme();
 	const {
 		formState: { errors },
@@ -27,32 +30,29 @@ const LoginContainer = () => {
 	};
 
 	const loginUser = (data: any) => {
-		console.log({ data: true });
+		console.log({ data });
 	};
 
 	const loginError = (error: any) => {
 		console.log({ error });
 	};
 	return (
-		<div className="flex max-h-screen">
-			<div className="container"></div>
+		<div className="flex w-screen h-screen justify-center items-center">
 			<Head>
 				<title>Pickup - Login</title>
 			</Head>
-			<div className="w-3/12 flex justify-center items-center">
+			<div className="w-full lg:w-5/12  flex justify-center items-center 2xl:w-3/12">
 				<form
 					onSubmit={handleSubmit(loginUser, loginError)}
-					className="grid gap-7 w-9/12"
+					className="grid gap-7 w-9/12 md:w-6/12 lg:w-9/12"
 				>
-					<h1 className="text-4xl font-bold">Sign In</h1>
+					<h1 className="text-4xl font-bold">{t('signIn.signInTitle')}</h1>
 					<Controller
 						name="email"
 						control={control}
 						rules={{
-							required: {
-								message: 'Email is required',
-								value: true,
-							},
+							required: true,
+							pattern: new RegExp(patterns.email),
 						}}
 						render={({ field }) => {
 							return (
@@ -61,15 +61,13 @@ const LoginContainer = () => {
 									error={errors?.email && true}
 									{...field}
 								>
-									<InputLabel>Email</InputLabel>
-									<OutlinedInput
-										id="outlined-basic"
-										label="Email"
-										type="text"
-									/>
+									<InputLabel>{t('signIn.signInEmailFieldLabel')}</InputLabel>
+									<OutlinedInput label="Email" type="text" />
 									{errors.email && (
 										<FormHelperText>
-											{errors.email?.message as string}
+											{errors.email && errors.email.type === 'required'
+												? t('signIn.signInEmailFieldError.required')
+												: t('signIn.signInEmailFieldError.invalid')}
 										</FormHelperText>
 									)}
 								</FormControl>
@@ -80,10 +78,7 @@ const LoginContainer = () => {
 						name="password"
 						control={control}
 						rules={{
-							required: {
-								message: 'Password is required',
-								value: true,
-							},
+							required: true,
 						}}
 						render={({ field }) => (
 							<FormControl
@@ -91,9 +86,8 @@ const LoginContainer = () => {
 								error={errors.password && true}
 								{...field}
 							>
-								<InputLabel>Password</InputLabel>
+								<InputLabel>{t('signIn.signInPasswordFieldLabel')}</InputLabel>
 								<OutlinedInput
-									id="outlined-basic"
 									label="Password"
 									type={showPass ? 'text' : 'password'}
 									endAdornment={
@@ -106,7 +100,7 @@ const LoginContainer = () => {
 								/>
 								{errors.password && (
 									<FormHelperText>
-										{errors.password?.message as string}
+										{t('signIn.signInPasswordFieldError') as string}
 									</FormHelperText>
 								)}
 							</FormControl>
@@ -121,7 +115,7 @@ const LoginContainer = () => {
 							height: '50px',
 						}}
 					>
-						Sign in
+						{t('signIn.signInButton')}
 					</Button>
 					<Button
 						variant="contained"
@@ -132,7 +126,8 @@ const LoginContainer = () => {
 							height: '50px',
 						}}
 					>
-						Sign in with Google <IconGoogleColor className="w-7 h-7" />
+						{t('signIn.signInWithGoogle')}{' '}
+						<IconGoogleColor className="w-7 h-7" />
 					</Button>
 					<a
 						className="text-blue-900 font-bold"
@@ -140,11 +135,11 @@ const LoginContainer = () => {
 						target="_blank"
 						rel="noreferrer"
 					>
-						Forgot your password ?
+						{t('signIn.signInForgotPasswordLinkText')}
 					</a>
 				</form>
 			</div>
-			<div className="w-9/12 relative">
+			<div className="w-7/12 h-full relative hidden lg:block 2xl:w-9/12">
 				<div className="bg-bg-black-rgba-0.5 absolute w-full h-full top-0 left-0"></div>
 				<img
 					className="w-full h-full object-cover block"

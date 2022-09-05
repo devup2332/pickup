@@ -17,6 +17,7 @@ import { Controller, useForm } from 'react-hook-form';
 import { IconGoogleColor } from '../../components/atoms/icons';
 import { useTranslation } from 'react-i18next';
 import { environments } from '../../environments';
+import axios from 'axios';
 
 const LoginContainer = () => {
 	const [showPass, setShowPass] = useState(false);
@@ -36,22 +37,28 @@ const LoginContainer = () => {
 		try {
 			setLoading(true);
 			const { email, password } = data;
-			const res = await fetch(
+			// const res = await fetch(
+			// 	`${environments.NEXT_APP_BACKEND_URI}/dev/loginUser`,
+			// 	{
+			// 		method: 'POST',
+			// 		body: JSON.stringify({
+			// 			email,
+			// 			password,
+			// 		}),
+			// 		headers: {
+			// 			'Access-Control-Allow-Origin': '*',
+			// 		},
+			// 	}
+			// );
+			const res = await axios.post(
 				`${environments.NEXT_APP_BACKEND_URI}/dev/loginUser`,
 				{
-					method: 'POST',
-					body: JSON.stringify({
-						email,
-						password,
-					}),
-					headers: {
-						'Access-Control-Allow-Origin': '*',
-					},
+					email,
+					password,
 				}
 			);
-			const data2 = await res.json();
 			setLoading(false);
-			console.log({ response: data2 });
+			console.log({ response: res.data });
 		} catch (e) {
 			console.log({ e });
 			setLoading(false);

@@ -3,6 +3,7 @@ import Head from 'next/head';
 import Button from '@mui/material/Button';
 import patterns from '../../utils/patterns/index';
 import {
+	CircularProgress,
 	FormControl,
 	FormHelperText,
 	IconButton,
@@ -15,9 +16,11 @@ import { useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { IconGoogleColor } from '../../components/atoms/icons';
 import { useTranslation } from 'react-i18next';
+import { environments } from '../../environments';
 
 const LoginContainer = () => {
 	const [showPass, setShowPass] = useState(false);
+	const [loading, setLoading] = useState(false);
 	const { t } = useTranslation('global');
 	const theme = useTheme();
 	const {
@@ -29,8 +32,30 @@ const LoginContainer = () => {
 		setShowPass(!showPass);
 	};
 
-	const loginUser = (data: any) => {
-		console.log({ data });
+	const loginUser = async (data: any) => {
+		try {
+			setLoading(true);
+			const { email, password } = data;
+			const res = await fetch(
+				`${environments.NEXT_APP_BACKEND_URI}/dev/loginUser`,
+				{
+					method: 'POST',
+					body: JSON.stringify({
+						email,
+						password,
+					}),
+					headers: {
+						'Access-Control-Allow-Origin': '*',
+					},
+				}
+			);
+			const data2 = await res.json();
+			setLoading(false);
+			console.log({ response: data2 });
+		} catch (e) {
+			console.log({ e });
+			setLoading(false);
+		}
 	};
 
 	const loginError = (error: any) => {
@@ -108,13 +133,21 @@ const LoginContainer = () => {
 					/>
 					<Button
 						variant="contained"
-						className="font-bold text-md normal-case rounded-xl"
+						className="font-bold flex gap-5 text-md normal-case rounded-xl"
 						type="submit"
 						style={{
 							backgroundColor: `${theme.palette.primary.main}`,
 							height: '50px',
 						}}
 					>
+						{loading && (
+							<CircularProgress
+								sx={{ width: '20px' }}
+								size="2rem"
+								className="w-3 h-3 block"
+								color="secondary"
+							/>
+						)}
 						{t('signIn.signInButton')}
 					</Button>
 					<Button

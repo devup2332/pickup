@@ -16,9 +16,6 @@ import { useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { IconGoogleColor } from '../../components/atoms/icons';
 import { useTranslation } from 'react-i18next';
-import { environments } from '../../environments';
-import axios from 'axios';
-import { instance } from '../../utils/api/instance';
 import { usersInstance } from '../../utils/api/services/users';
 
 const LoginContainer = () => {

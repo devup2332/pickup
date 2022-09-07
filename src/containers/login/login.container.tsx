@@ -18,6 +18,8 @@ import { IconGoogleColor } from '../../components/atoms/icons';
 import { useTranslation } from 'react-i18next';
 import { environments } from '../../environments';
 import axios from 'axios';
+import { instance } from '../../utils/api/instance';
+import { usersInstance } from '../../utils/api/services/users';
 
 const LoginContainer = () => {
 	const [showPass, setShowPass] = useState(false);
@@ -37,28 +39,9 @@ const LoginContainer = () => {
 		try {
 			setLoading(true);
 			const { email, password } = data;
-			// const res = await fetch(
-			// 	`${environments.NEXT_APP_BACKEND_URI}/dev/loginUser`,
-			// 	{
-			// 		method: 'POST',
-			// 		body: JSON.stringify({
-			// 			email,
-			// 			password,
-			// 		}),
-			// 		headers: {
-			// 			'Access-Control-Allow-Origin': '*',
-			// 		},
-			// 	}
-			// );
-			const res = await axios.post(
-				`${environments.NEXT_APP_BACKEND_URI}/dev/loginUser`,
-				{
-					email,
-					password,
-				}
-			);
+			const res = await usersInstance.loginUser(email, password);
 			setLoading(false);
-			console.log({ response: res.data });
+			console.log({ res });
 		} catch (e) {
 			console.log({ e });
 			setLoading(false);

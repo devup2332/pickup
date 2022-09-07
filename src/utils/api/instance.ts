@@ -20,7 +20,7 @@ export const instance = (
 		method,
 		body: method !== 'GET' ? body : null,
 		headers: {
-			'Access-Controll-Allow-Origin': '*',
+			'Access-Control-Allow-Origin': '*',
 		},
 	});
 };

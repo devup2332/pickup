@@ -37,6 +37,7 @@ const LoginContainer = () => {
 			setLoading(true);
 			const { email, password } = data;
 			const res = await usersInstance.loginUser(email, password);
+			console.log({ res });
 			setLoading(false);
 			console.log({ res });
 		} catch (e) {

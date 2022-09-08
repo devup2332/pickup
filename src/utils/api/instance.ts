@@ -3,7 +3,7 @@ import { environments } from '../../environments';
 export const instance = (
 	method: 'GET' | 'POST' | 'PUT' | 'PATCH',
 	path: string,
-	body: any = {},
+	body: any,
 	params?: { [key: string]: string | number }
 ) => {
 	let url = `${environments.NEXT_APP_BACKEND_URI}${path}`;
@@ -15,10 +15,18 @@ export const instance = (
 				index === keys.length - 1 ? `${p}=${params[p]}` : `${p}=${params[p]}&`;
 		});
 	}
-	console.log({ url });
+	if (method !== 'GET') {
+		return fetch(url, {
+			method,
+			body: JSON.stringify(body),
+			headers: {
+				'Access-Control-Allow-Origin': '*',
+			},
+		});
+	}
+
 	return fetch(url, {
 		method,
-		body: method !== 'GET' ? body : null,
 		headers: {
 			'Access-Control-Allow-Origin': '*',
 		},

@@ -11,5 +11,54 @@
 			"invalid": "Email is invalid"
 		},
 		"signInForgotPasswordLinkText": "Forgot your password ?"
+	},
+	"signUp": {
+		"signUpTitle": "Sign up",
+    "signUpSubtitle": "Have you and account",
+    "signUpLink": "Sign in",
+		"email": {
+			"label": "Email",
+			"errors": {
+				"required": "Email is required",
+				"invalid": "Email is invalid"
+			}
+		},
+		"countryCode": {
+			"label": "Country Code"
+		},
+		"phone": {
+			"label": "Phone",
+			"errors": {
+				"required": "Phone is required",
+				"invalid": "Phone requires only numbers"
+			}
+		},
+		"password_1": {
+			"label": "Password",
+			"errors": {
+				"required": "Password is required",
+				"minLength": "Password is too short",
+				"noEqual": "Password doesnt match"
+			}
+		},
+		"password_2": {
+			"label": "Repeat Password",
+			"errors": {
+				"required": "Please repeat password",
+				"minLength": "Password too short"
+			}
+		},
+		"firstName": {
+			"label": "First Name",
+			"errors": {
+				"required": "First Name is required"
+			}
+		},
+		"lastName": {
+			"label": "Last Name",
+			"errors": {
+				"required": "Last Name is required"
+			}
+		}
 	}
 }

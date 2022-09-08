@@ -19,9 +19,6 @@ export const instance = (
 		return fetch(url, {
 			method,
 			body: JSON.stringify(body),
-			headers: {
-				'Access-Control-Allow-Origin': '*',
-			},
 		});
 	}
 

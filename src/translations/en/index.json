@@ -15,6 +15,7 @@
 	},
 	"signUp": {
 		"signUpTitle": "Sign up",
+		"signUpButton": "Sign up",
 		"signUpSubtitle": "Have you and account ?",
 		"signUpWithGoogle": "Sign up with Google",
 		"signUpLink": "Sign in",

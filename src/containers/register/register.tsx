@@ -22,7 +22,6 @@ import countryOptions from '../../utils/options/countryCode';
 import Link from 'next/link';
 import { useMutation } from '@apollo/client';
 import { REGISTER_USER_MUTATION } from '../../graphql/services/users/queries';
-import { PassThrough } from 'stream';
 
 const RegisterPageContainer = () => {
 	const [loading, setLoading] = useState(false);
@@ -352,7 +351,7 @@ const RegisterPageContainer = () => {
 							height: '50px',
 						}}
 					>
-						{loading && (
+						{loadingNewUser && (
 							<CircularProgress
 								sx={{ width: '20px' }}
 								size="2rem"
@@ -360,7 +359,7 @@ const RegisterPageContainer = () => {
 								color="secondary"
 							/>
 						)}
-						{t('signIn.signInButton')}
+						{t('signUp.signUpButton')}
 					</Button>
 				</form>
 			</div>

@@ -1280,7 +1280,7 @@ const countryCodeOptions: CountryCodeOptions = {
 };
 
 const options: { label: string; value: string }[] = [];
-Object.keys(countryCodeOptions).forEach((option: string) => {
+Object.keys(countryCodeOptions).forEach((option) => {
 	const country = countryCodeOptions[option];
 	options.push({
 		label: `${country.name} ${country.code}`,

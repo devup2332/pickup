@@ -24,8 +24,5 @@ export const instance = (
 
 	return fetch(url, {
 		method,
-		headers: {
-			'Access-Control-Allow-Origin': '*',
-		},
 	});
 };

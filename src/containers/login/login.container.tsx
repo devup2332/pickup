@@ -17,6 +17,7 @@ import { Controller, useForm } from 'react-hook-form';
 import { IconGoogleColor } from '../../components/atoms/icons';
 import { useTranslation } from 'react-i18next';
 import { usersInstance } from '../../utils/api/services/users';
+import Link from 'next/link';
 
 const LoginContainer = () => {
 	const [showPass, setShowPass] = useState(false);
@@ -118,6 +119,11 @@ const LoginContainer = () => {
 							</FormControl>
 						)}
 					/>
+					<Link href="https://google.com" target="_blank">
+						<a className="" target="_blank">
+							{t('signIn.signInForgotPasswordLinkText')}
+						</a>
+					</Link>
 					<Button
 						variant="contained"
 						className="font-bold flex gap-5 text-md normal-case rounded-xl"
@@ -149,14 +155,9 @@ const LoginContainer = () => {
 						{t('signIn.signInWithGoogle')}{' '}
 						<IconGoogleColor className="w-7 h-7" />
 					</Button>
-					<a
-						className="text-blue-900 font-bold"
-						href="https://google.com"
-						target="_blank"
-						rel="noreferrer"
-					>
-						{t('signIn.signInForgotPasswordLinkText')}
-					</a>
+					<Link href="/register">
+						<a className="font-bold">{t('signIn.signInRegisterLabel')}</a>
+					</Link>
 				</form>
 			</div>
 			<div className="w-7/12 h-full relative hidden lg:block 2xl:w-9/12">

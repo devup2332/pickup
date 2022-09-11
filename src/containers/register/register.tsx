@@ -13,15 +13,21 @@ import {
 	useTheme,
 } from '@mui/material';
 import Head from 'next/head';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { IconGoogleColor } from '../../components/atoms/icons';
 import patterns from '../../utils/patterns';
 import countryOptions from '../../utils/options/countryCode';
+import Link from 'next/link';
+import { useMutation } from '@apollo/client';
+import { REGISTER_USER_MUTATION } from '../../graphql/services/users/queries';
+import { PassThrough } from 'stream';
 
 const RegisterPageContainer = () => {
 	const [loading, setLoading] = useState(false);
+	const [registerUserMutation, { data, error, loading: loadingNewUser }] =
+		useMutation(REGISTER_USER_MUTATION);
 	const [countryCode, setCountryCode] = useState('51');
 	const [showPass, setShowPass] = useState(false);
 	const theme = useTheme();
@@ -33,8 +39,28 @@ const RegisterPageContainer = () => {
 		setValue,
 	} = useForm();
 	const { t } = useTranslation('global');
-	const registerUser = (data: any) => {
-		console.log({ data });
+	const registerUser = async (data: any) => {
+		const {
+			email,
+			password_1: password,
+			countryCode,
+			phone,
+			firstName,
+			lastName,
+		} = data;
+		const user = {
+			email,
+			password,
+			phone: `${countryCode}${phone}`,
+			lastName,
+			firstName,
+		};
+		const res = await registerUserMutation({
+			variables: {
+				newUserInput: user,
+			},
+		});
+		console.log({ res });
 	};
 	const handleShowPass = () => {
 		setShowPass(!showPass);
@@ -43,6 +69,10 @@ const RegisterPageContainer = () => {
 	const handleError = (err: any) => {
 		console.log({ err });
 	};
+
+	useEffect(() => {
+		setValue('countryCode', '51');
+	}, []);
 
 	return (
 		<div className="flex h-screen">
@@ -61,24 +91,26 @@ const RegisterPageContainer = () => {
 					onSubmit={handleSubmit(registerUser, handleError)}
 					className="grid gap-8 grid-cols-11 w-8/12"
 				>
-					<div className="col-start-1 col-end-12 grid gap-8">
-						<h1 className="text-4xl font-bold col-start-1 col-end-12">
+					<div className="col-start-1 col-end-12 grid gap-8 items-center">
+						<h1 className="text-5xl font-extrabold col-start-1 col-end-12">
 							Sign Up
 						</h1>
 						<p className="flex gap-5">
 							{t('signUp.signUpSubtitle')}
-							<a href="">{t('signUp.signUpLink')}</a>
+							<Link href="/login">
+								<a className="font-bold">{t('signUp.signUpLink')}</a>
+							</Link>
 						</p>
 						<Button
 							variant="contained"
-							className="font-extrabold text-md normal-case rounded-xl flex gap-5"
+							className="font-extrabold text-md normal-case rounded-xl flex gap-5 col-start-6 col-end-12"
 							type="button"
 							color="secondary"
 							style={{
 								height: '50px',
 							}}
 						>
-							{t('signIn.signInWithGoogle')}{' '}
+							{t('signUp.signUpWithGoogle')}{' '}
 							<IconGoogleColor className="w-7 h-7" />
 						</Button>
 					</div>
@@ -158,7 +190,11 @@ const RegisterPageContainer = () => {
 									error={errors.phone && true}
 								>
 									<InputLabel>{t('signUp.phone.label')}</InputLabel>
-									<OutlinedInput label="Phone" type="text" />
+									<OutlinedInput
+										label="Phone"
+										type="number"
+										className="appearance-none"
+									/>
 									{errors.phone && (
 										<FormHelperText>
 											{errors.phone && errors.phone.type === 'required'

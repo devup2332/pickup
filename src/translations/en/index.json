@@ -10,12 +10,14 @@
 			"required": "Email is required",
 			"invalid": "Email is invalid"
 		},
-		"signInForgotPasswordLinkText": "Forgot your password ?"
+		"signInForgotPasswordLinkText": "Forgot your password ?",
+		"signInRegisterLabel": "Do you have an account ? Sign Up"
 	},
 	"signUp": {
 		"signUpTitle": "Sign up",
-    "signUpSubtitle": "Have you and account",
-    "signUpLink": "Sign in",
+		"signUpSubtitle": "Have you and account ?",
+		"signUpWithGoogle": "Sign up with Google",
+		"signUpLink": "Sign in",
 		"email": {
 			"label": "Email",
 			"errors": {
@@ -37,7 +39,7 @@
 			"label": "Password",
 			"errors": {
 				"required": "Password is required",
-				"minLength": "Password is too short",
+				"minLength": "Password is must be at least 9 characteres",
 				"noEqual": "Password doesnt match"
 			}
 		},

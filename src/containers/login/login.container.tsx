@@ -12,15 +12,17 @@ import {
 	useTheme,
 } from '@mui/material';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { IconGoogleColor } from '../../components/atoms/icons';
 import { useTranslation } from 'react-i18next';
 import { usersInstance } from '../../utils/api/services/users';
 import Link from 'next/link';
+import { signIn, useSession } from 'next-auth/react';
 
 const LoginContainer = () => {
 	const [showPass, setShowPass] = useState(false);
+	const { data: session } = useSession();
 	const [loading, setLoading] = useState(false);
 	const { t } = useTranslation('global');
 	const theme = useTheme();
@@ -44,6 +46,14 @@ const LoginContainer = () => {
 			console.log({ e });
 			setLoading(false);
 		}
+	};
+
+	useEffect(() => {
+		console.log({ session });
+	}, [session]);
+
+	const loginWithGoogle = () => {
+		signIn('google');
 	};
 
 	const loginError = (error: any) => {
@@ -120,7 +130,7 @@ const LoginContainer = () => {
 						)}
 					/>
 					<Link href="https://google.com" target="_blank">
-						<a className="" target="_blank">
+						<a className="w-fit justify-self-end text-blue-900 font-bold" target="_blank">
 							{t('signIn.signInForgotPasswordLinkText')}
 						</a>
 					</Link>
@@ -148,6 +158,7 @@ const LoginContainer = () => {
 						className="font-extrabold text-md normal-case rounded-xl flex gap-5"
 						type="button"
 						color="secondary"
+						onClick={loginWithGoogle}
 						style={{
 							height: '50px',
 						}}
@@ -155,9 +166,12 @@ const LoginContainer = () => {
 						{t('signIn.signInWithGoogle')}{' '}
 						<IconGoogleColor className="w-7 h-7" />
 					</Button>
-					<Link href="/register">
-						<a className="font-bold">{t('signIn.signInRegisterLabel')}</a>
-					</Link>
+					<p className="flex gap-5">
+						{t('signIn.signInRegisterLabel')}
+						<Link href="/register">
+							<a className="font-bold">{t('signIn.signInRegisterLink')}</a>
+						</Link>
+					</p>
 				</form>
 			</div>
 			<div className="w-7/12 h-full relative hidden lg:block 2xl:w-9/12">

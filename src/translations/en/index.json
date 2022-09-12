@@ -10,8 +10,9 @@
 			"required": "Email is required",
 			"invalid": "Email is invalid"
 		},
-		"signInForgotPasswordLinkText": "Forgot your password ?",
-		"signInRegisterLabel": "Do you have an account ? Sign Up"
+		"signInForgotPasswordLinkText": "Forgot password ?",
+		"signInRegisterLabel": "Do you have an account ?",
+		"signInRegisterLink": "Sign Up"
 	},
 	"signUp": {
 		"signUpTitle": "Sign up",
@@ -23,7 +24,8 @@
 			"label": "Email",
 			"errors": {
 				"required": "Email is required",
-				"invalid": "Email is invalid"
+				"invalid": "Email is invalid",
+				"isUsed": "This email is already taken"
 			}
 		},
 		"countryCode": {

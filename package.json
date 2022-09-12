@@ -22,6 +22,7 @@
     "i18next": "^21.9.1",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
     "next": "12.2.5",
+    "next-auth": "^4.10.3",
     "postcss": "^8.4.16",
     "react": "18.2.0",
     "react-dom": "18.2.0",

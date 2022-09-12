@@ -8,6 +8,7 @@ import '../styles/global.scss';
 import theme from '../theme';
 import globalEn from '../translations/en/index.json';
 import globalEs from '../translations/es/index.json';
+import { SessionProvider } from 'next-auth/react';
 
 i18next.init({
 	interpolation: { escapeValue: false },
@@ -27,15 +28,17 @@ const apolloClient = new ApolloClient({
 	cache: new InMemoryCache(),
 });
 
-function MyApp({ Component, pageProps }: AppProps) {
+function MyApp({ Component, pageProps, session }: AppProps) {
 	return (
-		<ApolloProvider client={apolloClient}>
-			<I18nextProvider i18n={i18next}>
-				<ThemeProvider theme={theme}>
-					<Component {...pageProps} />
-				</ThemeProvider>
-			</I18nextProvider>
-		</ApolloProvider>
+		<SessionProvider session={session}>
+			<ApolloProvider client={apolloClient}>
+				<I18nextProvider i18n={i18next}>
+					<ThemeProvider theme={theme}>
+						<Component {...pageProps} />
+					</ThemeProvider>
+				</I18nextProvider>
+			</ApolloProvider>
+		</SessionProvider>
 	);
 }
 

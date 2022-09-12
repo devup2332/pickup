@@ -22,16 +22,18 @@ import countryOptions from '../../utils/options/countryCode';
 import Link from 'next/link';
 import { useMutation } from '@apollo/client';
 import { REGISTER_USER_MUTATION } from '../../graphql/services/users/queries';
+import { signIn, useSession } from 'next-auth/react';
+import { usersInstance } from '../../utils/api/services/users';
 
 const RegisterPageContainer = () => {
-	const [loading, setLoading] = useState(false);
+	const { data: session } = useSession();
 	const [registerUserMutation, { data, error, loading: loadingNewUser }] =
 		useMutation(REGISTER_USER_MUTATION);
 	const [countryCode, setCountryCode] = useState('51');
 	const [showPass, setShowPass] = useState(false);
 	const theme = useTheme();
 	const {
-		formState: { errors },
+		formState: { errors, touchedFields, dirtyFields },
 		control,
 		handleSubmit,
 		watch,
@@ -61,12 +63,22 @@ const RegisterPageContainer = () => {
 		});
 		console.log({ res });
 	};
+
+	const registerWithGoogle = async () => {
+		signIn('google');
+	};
 	const handleShowPass = () => {
 		setShowPass(!showPass);
 	};
 
 	const handleError = (err: any) => {
 		console.log({ err });
+	};
+
+	const validateEmail = async (email: string) => {
+		const valid = await usersInstance.validateEmail(email);
+		if (!valid) return false;
+		return true;
 	};
 
 	useEffect(() => {
@@ -104,6 +116,7 @@ const RegisterPageContainer = () => {
 							variant="contained"
 							className="font-extrabold text-md normal-case rounded-xl flex gap-5 col-start-6 col-end-12"
 							type="button"
+							onClick={registerWithGoogle}
 							color="secondary"
 							style={{
 								height: '50px',
@@ -119,6 +132,9 @@ const RegisterPageContainer = () => {
 						rules={{
 							required: true,
 							pattern: new RegExp(patterns.email),
+							validate: {
+								validateEmail,
+							},
 						}}
 						render={({ field }) => {
 							return (
@@ -132,9 +148,12 @@ const RegisterPageContainer = () => {
 									<OutlinedInput label="Email" type="text" />
 									{errors.email && (
 										<FormHelperText>
-											{errors.email && errors.email.type === 'required'
-												? t('signUp.email.errors.required')
-												: t('signUp.email.errors.invalid')}
+											{errors.email.type === 'required' &&
+												t('signUp.email.errors.required')}
+											{errors.email.type === 'pattern' &&
+												t('signUp.email.errors.invalid')}
+											{errors.email.type === 'validateEmail' &&
+												t('signUp.email.errors.isUsed')}
 										</FormHelperText>
 									)}
 								</FormControl>

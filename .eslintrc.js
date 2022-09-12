@@ -35,5 +35,6 @@ module.exports = {
 		'comma-dangle': ['off'],
 		'space-before-function-paren': 'off',
 		'@typescript-eslint/no-explicit-any': 'off',
+		'multiline-ternary': 'off',
 	},
 };

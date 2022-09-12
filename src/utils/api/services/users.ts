@@ -8,4 +8,10 @@ export const usersInstance = {
 		const data = await res.json();
 		return data;
 	},
+
+	validateEmail: async (email: string) => {
+		const res = await instance('POST', '/dev/validateEmail', { email });
+		const { validate } = await res.json();
+		return validate as boolean;
+	},
 };
